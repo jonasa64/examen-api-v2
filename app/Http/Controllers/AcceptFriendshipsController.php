@@ -14,8 +14,14 @@ class AcceptFriendshipsController extends Controller
               'recipient_id' => auth()->id()
   
           ])->get();
+
+          $sendFriendRequest = Fiendship::with('recipient')->where([
+            'sender_id' => auth()->id(),
+            "status" => 'pending'
+          ])->get();
+
   
-          return response()->json(["data" => $friendships], 200);
+          return response()->json(["data" => $friendships, "sendRequests" => $sendFriendRequest], 200);
       }
   
       public function store(User $sender){
@@ -41,10 +47,16 @@ class AcceptFriendshipsController extends Controller
               'recipient_id' => auth()->id(),
   
           ])->update(['status' => 'denied']);
+
+          $friendships =  Fiendship::with('sender')->where([
+  
+            'recipient_id' => auth()->id()
+
+        ])->get();
   
           return response()->json([
   
-              'friendship_status' => 'denied'
+              'data' => $friendships
   
           ], 200);
   
