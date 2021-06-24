@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['http:localhost:300', 'https://react-examen-v1.herokuapp.com/','*'],
 
     'allowed_origins_patterns' => [],
 
